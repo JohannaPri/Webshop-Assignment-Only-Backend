@@ -2,16 +2,22 @@ const express = require('express');
 const router = express.Router();
 const { ObjectId } = require('mongodb');
 
-
-router.post('/add', async(req, res) => {
+router.post('/add', async (req, res) => {
   try {
     const { user, products } = req.body;
+
+    if (!user) {
+      throw new Error('Invalid user!');
+    }
+
+    if (!Array.isArray(products) || products.length === 0) {
+      throw new Error('Invalid products');
+    }
+
     const ordersCollection = req.app.locals.db.collection('orders');
     const productsCollection = req.app.locals.db.collection('products');
-    const newOrder = { user, products };
-    const result = await ordersCollection.insertOne(newOrder);
 
-    products.forEach(async (product) => {
+    for (const product of products) {
       const { productId, quantity } = product;
 
       if (!ObjectId.isValid(productId)) {
@@ -25,15 +31,18 @@ router.post('/add', async(req, res) => {
         throw new Error(`Product ${productId} not found or lager is 0`);
       }
 
-      const updateResult = await productsCollection.updateOne(
-        { _id: productIdObjectID },
-        { $inc: { lager: -quantity } }
-      );
-
-      if (updateResult.modifiedCount === 0) {
-        throw new Error(`Failed to update product ${productId}`);
+      if (quantity > existingProduct.lager) {
+        throw new Error(`Order quantity for product ${productId} exceeds available stock`);
       }
-    });
+
+        await productsCollection.updateOne(
+          { _id: productIdObjectID },
+          { $inc: { lager: -quantity } }
+        );
+    }
+
+    const newOrder = { user, products };
+    const result = await ordersCollection.insertOne(newOrder);
 
     res.status(201).json(result);
   } catch (error) {
@@ -41,7 +50,6 @@ router.post('/add', async(req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-    
 
 router.get('/all', async (req, res) => {
   try {
@@ -52,6 +60,5 @@ router.get('/all', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-
 
 module.exports = router;

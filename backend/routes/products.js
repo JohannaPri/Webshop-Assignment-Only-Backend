@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { ObjectId } = require('mongodb');
 
-//const mockProducts = require('./mockProducts')
+
 
 router.post('/add', async (req, res) => {
   try {
@@ -17,7 +17,6 @@ router.post('/add', async (req, res) => {
 });
 
 router.get('/', async (req, res) => {
-  mockProducts
   try {
     const productsCollection = req.app.locals.db.collection('products');
     const products = await productsCollection.find({}).toArray();
@@ -38,7 +37,5 @@ router.get('/:id', async (req, res) => {
     res.status(401).json({ message: 'Product not found'});
   }
 });
-
-
 
 module.exports = router;
