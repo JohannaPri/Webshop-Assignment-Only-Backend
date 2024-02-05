@@ -5,8 +5,8 @@
 **It's not possible to see the webshop in a browser.**
 **This webshop is only built with backend (no frontend), the only way to try it, is if you use:**
 
-- **Postman**
-- **REST Client in Visual Studio Code**
+- Postman
+- REST Client in Visual Studio Code
 
 #### It's connected to a database through MongoDB Compass, there you can see users, products and orders that are created with Postman or REST client.
 
