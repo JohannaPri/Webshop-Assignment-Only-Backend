@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const { ObjectId } = require('mongodb');
 
-
-
 router.post('/add', async (req, res) => {
   try {
     const { name, description, price, lager } = req.body;
