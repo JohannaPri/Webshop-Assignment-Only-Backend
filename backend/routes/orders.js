@@ -28,23 +28,27 @@ router.post('/add', async (req, res) => {
       const existingProduct = await productsCollection.findOne({ _id: productIdObjectID });
 
       if (!existingProduct || existingProduct.lager === 0 || quantity === 0) {
-        throw new Error(`Product ${productId} not found or lager is 0`);
+        throw new Error(`Product ${productId} not found or out of stock`);
       }
 
       if (quantity > existingProduct.lager) {
         throw new Error(`Order quantity for product ${productId} exceeds available stock`);
       }
-
-        await productsCollection.updateOne(
-          { _id: productIdObjectID },
-          { $inc: { lager: -quantity } }
-        );
     }
 
     const newOrder = { user, products };
     const result = await ordersCollection.insertOne(newOrder);
 
-    res.status(201).json(result);
+    for (const product of products) {
+      const { productId, quantity } = product;
+      const productIdObjectID = new ObjectId(productId);
+      await productsCollection.updateOne(
+        { _id: productIdObjectID },
+        { $inc: { lager: -quantity } }
+      );
+    }
+
+    res.status(201).json({ message: 'Order placed successfully!', result });
   } catch (error) {
     console.error('Error processing order: ', error);
     res.status(500).json({ error: error.message });
