@@ -8,7 +8,7 @@
 - Postman
 - REST Client in Visual Studio Code
 
-#### It's connected to a database through MongoDB Compass, there you can see users, products and orders that are created with Postman or REST client.
+#### It's connected to a database through MongoDB Compass. There you can see users, products and orders that are created with Postman or REST client.
 
 ## Content 
 
