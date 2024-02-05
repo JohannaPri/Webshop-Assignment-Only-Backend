@@ -1,50 +1,44 @@
-# Du har fått i uppdrag att utveckla API’et till en webbshop.
+# Webshop - With Only Backend (Assignment in course API-development)
 
-En lösningsarkitekt har redan dokumenterat vilka endpoints som skall finnas för API’et samt skrivit ett test flöde med REST-Client som ni kan börja utveckal med. Dvs vilka endpoints och vad de skall heta samt vad de förväntas returnera är redan förutbestämt. 
+#### This Backend-webshop is made as an assignment in the API-development course. 
 
-För att testerna skall fungera behöver ni Rest-Client (extension) installerat till vsc.
+**It's not possible to see the webshop in a browser.**
+**This webshop is only built with backend (no frontend), the only way to try it, is if you use Postman or REST Client in Visual Studio Code.**
 
-För G krav så räcker det att de endpoints markerade med G fungerar. 
+#### It's connected to a database through MongoDB Compass, there you can see users, products and orders that are created with Postman or REST client.
 
-För VG behöver även de endpoints markerade med VG fungera. För VG så skall även en frontend klient för projektet skapas där minst endpointsen för G kraven används (se nedan för en lista av vilka krav som specifieras för klienten). 
-Dvs, för betyget G behöver ingen frontend skapas.
+## Content 
 
-Projektet ni klonar har förutom test-rest filerna förberett även en mapp för backend, där ni kan installera express på valfritt sätt. Samt en mapp för frontend där ni kan skapa er frontend klient på valfritt sätt. 
+I have during this assignment been using following components:
 
-All data skall sparas i en lokal MongoDB databas. Döp databasen enligt “fornamn-efternamn”.
+- Express installation 
+- Node.js
+- MongoDB 
+- JavaScript
+- MongoDB Compass
+- Postman
+- REST Client
 
-Det är helt ok att skapa alla produkter med “mock” data, samt att för designens skull använda en “placeholder”-bild för produkterna, dvs att alla produkter har samma bild.
+## API-documentation 
 
+This project is only built with endpoints. 
 
-### Skillnader mellan G och VG krav:
+Below I will list the endpoints, that's included in this project.
 
-För kravet G så behöver inte anänvdarens lösenord krypteras. 
+### Users 
 
-För VG så behöver användarens lösenord i endpointen krypteras innan det sparas i databasen. Samt så skall alla administratörs endpoints skyddas med en API nyckel, dvs om inte rätt nyckel skickas med i POST body, eller som param i GET, så skall inte anropet hanteras av servern utan istället svara med en statuskod 401 (unauthorized) och lämna ett passande medelande ({“message”: “Not Authorized”). 
+- `GET /users`: Retrieve all users
+- `POST /users/`: Retrieve a specific user
+- `POST /users/add`: Create user
+- `POST /users/login`: Login user
 
+### Products
 
+- `GET /products`: Retrieve all products
+- `GET /products/id`: Retrieve a specific product 
+- `POST /products/add`: Create product
 
-OBS! Spara aldrig API nyckeln i databasen när du tex sparar en order eller en ny kategori.
+### Orders
 
-Hårdkoda heller inte in nyckeln någonstans i backend, tänk på att nyckeln skall enkelt kunna ändras vid behov. Tex via en global variabel, eller en .env variabel.
-
-Skapar du en .env fil för projektet så skicka med ett exempel på env filen döpt till “example.env”.
-
-För G nivå så behöver inte produkter sparas i kategorier. För VG så behöver kategorier kunna skapas och produkter sparas i olika kategorier.
-
-
-
-### Frontend klienten skall kunna (VG krav):
-
-Skapa en ny användare samt logga in
-Lösenordet skall krypteras
-Se vilka produkter som finns i butiken, fördelat på olika kategorier. 
-På varje produkt så skall grundläggande info som pris, namn och bild (placeholder) visas.
-Kunna lägga en produkt i en kundvagn
-Skicka en order med alla produkter från kundvagnen
-Kunna se en sida med alla sina skapade orders, samt vilka produkter en order innehåller.
-Lämna in länken till ert skapde repo när ni är färidga. Skriv även ett meddelande om ni önskar att bli testade mot G eller VG kraven.
-
-Lycka till!
-
-Kom ihåg att comitta och pusha ofta!
+- `POST /oders/add`: Create order for a specifik user.
+- `GET /oders/all`: Retrieve all orders
