@@ -31,7 +31,7 @@ Below I will list the endpoints, that's included in this project.
 ### Users 
 
 - `GET /users`: Retrieve all users
-- `POST /users/`: Retrieve a specific user
+- `POST /users/id`: Retrieve a specific user
 - `POST /users/add`: Create user
 - `POST /users/login`: Login user
 
